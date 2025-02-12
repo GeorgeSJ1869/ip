@@ -1,0 +1,10 @@
+list
+todo
+todo Add a task
+mark 2
+mark 1
+deadline
+deadline Second task /by March
+event Third task /from Tuesday /to Wednesday
+list
+bye

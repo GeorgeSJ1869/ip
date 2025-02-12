@@ -1,118 +1,110 @@
 import java.util.Scanner;
+import java.util.regex.PatternSyntaxException;
 
 public class Geo {
-    public static void main(String[] args) {
+    public static void main(String[] args){
         String logo = "Geo";
-        UI UI = new UI();
         Scanner scanner = new Scanner(System.in);
 
         //Welcome
-        UI.print("Hello from " + logo + '\n' + "What can I do for you?\n");
+        UI.print("Hello from " + logo + '\n' + "How can I help you?\n");
 
         TaskList taskList = new TaskList();
 
-        while(true) {
+        while(true){
             String input = scanner.nextLine();
-            if (input.equalsIgnoreCase("bye")) {
-                exit();
-            } else if (input.equalsIgnoreCase("list")) {
+            if (input.equalsIgnoreCase("bye")){
+                UI.print("Bye. Hope to see you again soon!\n");
+                System.exit(0);
+            } else if (input.equalsIgnoreCase("list")){
                 UI.print(taskList.showFullList());
             } else {
-                String[] splitBySpace = input.split(" ");
-                String firstWord = splitBySpace[0];
-                switch (firstWord) {
-                case "mark" -> {
-                    if (splitBySpace.length < 2) {
-                        UI.print("""
-                                You need to specify which task to be marked undone!
-                                Format: mark X
-                                """);
-                    } else {
-                        int index = Integer.parseInt(input.substring(5));
-                        if (index <= 0 || index > taskList.getTaskCount()) {
-                            UI.print("Invalid task index\n");
-                        } else {
-                            taskList.mark(index, true);
-                            UI.print(
-                                    "Nice! I've marked this task as done:\n"
-                                            + taskList.showTask(index) + '\n');
-                        }
+                //Action depends on the first word
+                String[] splitBySpace = input.split(" ", 2);
+                try {
+                    switch (splitBySpace[0]) {
+                    case "mark":
+                        markTask(taskList, input, true);
+                        break;
+                    case "unmark":
+                        markTask(taskList, input, false);
+                        break;
+                    case "todo":
+                        addTask(taskList, "todo", splitBySpace[1]);
+                        break;
+                    case "deadline":
+                        addTask(taskList, "deadline", splitBySpace[1]);
+                        break;
+                    case "event":
+                        addTask(taskList, "event", splitBySpace[1]);
+                        break;
+                    default:
+                        UI.print("Invalid command!\n");
+                        break;
                     }
-                }
-                case "unmark" -> {
-                    if (splitBySpace.length < 2) {
+                } catch (ArrayIndexOutOfBoundsException | PatternSyntaxException e){
+                    //If the input is missing information
+                    switch (splitBySpace[0]) {
+                    case "todo":
                         UI.print("""
-                                You need to specify which task to be marked undone!
-                                Format: unmark X
-                                """);
-                    } else {
-                        int index = Integer.parseInt(input.substring(7));
-                        if (index <= 0 || index > taskList.getTaskCount()) {
-                            UI.print("Invalid task index\n");
-                        } else {
-                            taskList.mark(index, false);
-                            UI.print("OK, I've marked this task as not done yet:\n"
-                                    + taskList.showTask(index) + '\n');
-                        }
-                    }
-                }
-                case "todo" -> {
-                    if (splitBySpace.length < 2) {
+                        You need to specify the task name!
+                        Format: todo [task name]
+                        """);
+                        break;
+                    case "deadline":
                         UI.print("""
-                                You need to specify the task name!
-                                Format: todo [task name]
-                                """);
-                    } else {
-                        taskList.addTask(input.substring(5));
-                        UI.print("Got it. I've added this task:\n"
-                                + taskList.showTask(taskList.getTaskCount()) + '\n'
-                                + "Now you have " + taskList.getTaskCount() + " tasks in the list\n");
-                    }
-                }
-                case "deadline" -> {
-                    String[] split = input.substring(8).split("/by", 2);
-                    if (split.length < 2) {
+                        You need to specify the deadline!
+                        Format: deadline [task name] /by [deadline]
+                        """);
+                        break;
+                    case "event":
                         UI.print("""
-                                You need to specify the deadline!
-                                Format: deadline [task name] /by [deadline]
-                                """);
-                    } else {
-                        taskList.addTask(split[0].trim(), split[1].trim());
-                        UI.print("Got it. I've added this task:\n"
-                                + taskList.showTask(taskList.getTaskCount()) + '\n'
-                                + "Now you have " + taskList.getTaskCount() + " tasks in the list\n");
+                        You need to specify the start and end date of the event!
+                        Format: event [task name] /from [start time] /to [end time]
+                        """);
+                        break;
+                    default:
+                        //Not expecting to execute this
+                        UI.print("Seems like an error occurred in the code");
+                        break;
                     }
-                }
-                case "event" -> {
-                    String[] split = input.substring(5).split("/from | /to", 3);
-                    if (split.length < 3) {
-                        UI.print("""
-                                You need to specify the start and end date of the event!
-                                Format: event [task name] /from [start time] /to [end time]
-                                """);
-                    } else {
-                        taskList.addTask(split[0].trim(), split[1].trim(), split[2].trim());
-                        UI.print("Got it. I've added this task:\n"
-                                + taskList.showTask(taskList.getTaskCount()) + '\n'
-                                + "Now you have " + taskList.getTaskCount() + " tasks in the list\n");
-                    }
-                }
-                default -> {
-                    taskList.addTask(input);
-                    UI.print("Got it. I've added this task:\n"
-                            + taskList.showTask(taskList.getTaskCount()) + '\n'
-                            + "Now you have " + taskList.getTaskCount() + " tasks in the list\n");
-                }
                 }
             }
         }
     }
 
-    //Exit
-    public static void exit(){
-        System.out.println("____________________________________________________________");
-        System.out.println("Bye. Hope to see you again soon!");
-        System.out.println("____________________________________________________________");
-        System.exit(0);
+    private static void markTask(TaskList list, String input, boolean status){
+        try {
+            int index = Integer.parseInt(input.substring(status? 5 : 7));
+            list.mark(index, status);
+        } catch (NumberFormatException | StringIndexOutOfBoundsException e){
+            //If input missing information
+            UI.print("""
+                    You need to specify which task to be marked!
+                    Format: mark/unmark X
+                    """);
+        } catch (NullPointerException e){
+            //Not expecting to execute this because the mark() handles errors already
+            UI.print("Error occurred in taskList\n");
+        }
+    }
+
+    public static void addTask(TaskList list, String command, String rest){
+        switch (command){
+        case "todo":
+            list.addTask(rest);
+            break;
+        case "deadline":
+            String[] split = rest.split("/by", 2);
+            list.addTask(split[0].trim(), split[1].trim());
+            break;
+        case "event":
+            String[] firstSplit = rest.split("/from", 2);
+            String[] secondSplit = firstSplit[1].split("/to", 2);
+            list.addTask(firstSplit[0].trim(), secondSplit[0].trim(), secondSplit[1].trim());
+            break;
+        default:
+            UI.print("You need to specify the task type! (todo, deadline or event)\n");
+        }
     }
 }

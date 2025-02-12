@@ -7,30 +7,36 @@ public class TaskList {
         taskCount = 0;
     }
 
-    public int getTaskCount() {
+    public int getTaskCount(){
         return taskCount;
     }
 
     public void addTask(String description){
         taskList[taskCount] = new Todo(description);
         taskCount++;
+        UI.printAddTaskMessage(showTask(taskCount), taskCount);
     }
 
     public void addTask(String description, String deadline){
         taskList[taskCount] = new Deadline(description, deadline);
         taskCount++;
+        UI.printAddTaskMessage(showTask(taskCount), taskCount);
     }
 
     public void addTask(String description, String startTime, String endTime){
         taskList[taskCount] = new Event(description, startTime, endTime);
         taskCount++;
+        UI.printAddTaskMessage(showTask(taskCount), taskCount);
     }
 
     public void mark(int taskIndex, boolean status){
-        if (taskIndex > taskCount){
+        if (taskIndex > taskCount || taskIndex <= 0){
+            UI.print("Invalid task number! Type " + '"' + "list" + '"' + " to view the list of tasks\n");
             return;
         }
         taskList[taskIndex - 1].mark(status);
+        UI.print("This task is marked as done:\n"
+                    + showTask(taskIndex) + '\n');
     }
 
     public String showTask(int taskIndex){
@@ -41,7 +47,7 @@ public class TaskList {
         if (taskCount <= 0){
             return "List is empty!\n";
         } else {
-            String list = "Here are the tasks in your list:\n";
+            String list = "Here is the list of all tasks:\n";
             for (int i = 0; i < taskCount; i++){
                 list += (Integer.toString(i + 1) + ". " + taskList[i].toString() + "\n");
             }
