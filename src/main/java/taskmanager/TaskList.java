@@ -1,3 +1,7 @@
+package taskmanager;
+
+import mainstructure.UI;
+
 public class TaskList {
     protected Task[] taskList;
     protected int taskCount;

@@ -1,5 +1,8 @@
+package mainstructure;
+
 import java.util.Scanner;
 import java.util.regex.PatternSyntaxException;
+import taskmanager.*;
 
 public class Geo {
     public static void main(String[] args){
@@ -16,8 +19,10 @@ public class Geo {
             if (input.equalsIgnoreCase("bye")){
                 UI.print("Bye. Hope to see you again soon!\n");
                 System.exit(0);
-            } else if (input.equalsIgnoreCase("list")){
+            } else if (input.equalsIgnoreCase("list")) {
                 UI.print(taskList.showFullList());
+            //} else if(input.equalsIgnoreCase("wiki")){
+                //UI.printTaskWiki();
             } else {
                 //Action depends on the first word
                 String[] splitBySpace = input.split(" ", 2);
@@ -104,6 +109,7 @@ public class Geo {
             list.addTask(firstSplit[0].trim(), secondSplit[0].trim(), secondSplit[1].trim());
             break;
         default:
+            //Not expecting to execute this
             UI.print("You need to specify the task type! (todo, deadline or event)\n");
         }
     }

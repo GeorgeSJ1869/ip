@@ -1,3 +1,5 @@
+package mainstructure;
+
 public class UI {
     private static final String horizontalLine = "____________________________________________________________\n";
 
