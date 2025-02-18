@@ -1,4 +1,4 @@
-package taskmanager;
+package mainstructure.taskmanager;
 
 public abstract class Task {
     protected String description;

@@ -1,4 +1,4 @@
-package taskmanager;
+package mainstructure.taskmanager;
 
 public class Event extends Task{
     protected String start;

@@ -1,4 +1,4 @@
-package taskmanager;
+package mainstructure.taskmanager;
 
 public class Todo extends Task{
     public Todo(String description){

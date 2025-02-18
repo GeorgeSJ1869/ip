@@ -1,4 +1,4 @@
-package taskmanager;
+package mainstructure.taskmanager;
 
 import mainstructure.UI;
 

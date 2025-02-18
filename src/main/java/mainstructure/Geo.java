@@ -2,7 +2,7 @@ package mainstructure;
 
 import java.util.Scanner;
 import java.util.regex.PatternSyntaxException;
-import taskmanager.*;
+import mainstructure.taskmanager.*;
 
 public class Geo {
     public static void main(String[] args){

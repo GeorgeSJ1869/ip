@@ -1,4 +1,4 @@
-package taskmanager;
+package mainstructure.taskmanager;
 
 public class Deadline extends Task{
     protected String end;
