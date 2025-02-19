@@ -43,11 +43,14 @@ public class Geo {
                     case "event":
                         addTask(taskList, "event", splitBySpace[1]);
                         break;
+                    case "delete":
+                        taskList.deleteTask(Integer.parseInt(splitBySpace[1]));
+                        break;
                     default:
                         UI.print("Invalid command!\n");
                         break;
                     }
-                } catch (ArrayIndexOutOfBoundsException | PatternSyntaxException e){
+                } catch (ArrayIndexOutOfBoundsException | PatternSyntaxException | NumberFormatException e){
                     //If the input is missing information
                     switch (splitBySpace[0]) {
                     case "todo":
@@ -66,6 +69,12 @@ public class Geo {
                         UI.print("""
                         You need to specify the start and end date of the event!
                         Format: event [task name] /from [start time] /to [end time]
+                        """);
+                        break;
+                    case "delete":
+                        UI.print("""
+                        You need to specify which task to delete!
+                        Format: delete X
                         """);
                         break;
                     default:
