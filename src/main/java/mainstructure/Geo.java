@@ -1,11 +1,14 @@
 package mainstructure;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.regex.PatternSyntaxException;
 import mainstructure.taskmanager.*;
 
 public class Geo {
-    public static void main(String[] args){
+    public static void main(String[] args) throws FileNotFoundException {
         String logo = "Geo";
         Scanner scanner = new Scanner(System.in);
 
@@ -13,6 +16,17 @@ public class Geo {
         UI.print("Hello from " + logo + '\n' + "How can I help you?\n");
 
         TaskList taskList = new TaskList();
+        try {
+            String save = SaveManager.readFileContents(SaveManager.defaultPath);
+            ArrayList<TaskInfo> savedTasks = SaveReader.readSave(save);
+            for (TaskInfo task : savedTasks){
+                addTask(taskList, task.getType(), task.getInfo());
+            }
+        } catch (FileNotFoundException e){
+            UI.print("Save not found\n");
+        } catch (IOException e){
+            UI.print("Error with save file");
+        }
 
         while(true){
             String input = scanner.nextLine();
@@ -73,6 +87,8 @@ public class Geo {
                         UI.print("Seems like an error occurred in the code");
                         break;
                     }
+                } catch (IOException e){
+                    UI.print("Saving error");
                 }
             }
         }
@@ -94,23 +110,30 @@ public class Geo {
         }
     }
 
-    public static void addTask(TaskList list, String command, String rest){
-        switch (command){
-        case "todo":
-            list.addTask(rest);
-            break;
-        case "deadline":
-            String[] split = rest.split("/by", 2);
-            list.addTask(split[0].trim(), split[1].trim());
-            break;
-        case "event":
-            String[] firstSplit = rest.split("/from", 2);
-            String[] secondSplit = firstSplit[1].split("/to", 2);
-            list.addTask(firstSplit[0].trim(), secondSplit[0].trim(), secondSplit[1].trim());
-            break;
-        default:
-            //Not expecting to execute this
-            UI.print("You need to specify the task type! (todo, deadline or event)\n");
+    public static void addTask(TaskList list, String command, String rest) throws IOException {
+        try {
+            switch (command) {
+            case "todo":
+                list.addTask(rest);
+                SaveManager.appendTextFile(SaveManager.defaultPath, list.showTask(list.getTaskCount()));
+                break;
+            case "deadline":
+                String[] split = rest.split("/by|\\(by:|\\)", 3);
+                list.addTask(split[0].trim(), split[1].trim());
+                SaveManager.appendTextFile(SaveManager.defaultPath, list.showTask(list.getTaskCount()));
+                break;
+            case "event":
+                String[] firstSplit = rest.split("/from|\\(from:", 2);
+                String[] secondSplit = firstSplit[1].split("/to|to:|\\)", 3);
+                list.addTask(firstSplit[0].trim(), secondSplit[0].trim(), secondSplit[1].trim());
+                SaveManager.appendTextFile(SaveManager.defaultPath, list.showTask(list.getTaskCount()));
+                break;
+            default:
+                //Not expecting to execute this
+                UI.print("You need to specify the task type! (todo, deadline or event)\n");
+            }
+        } catch (IOException e){
+            SaveManager.writeTextFile(SaveManager.defaultPath, list.showTask(list.getTaskCount()));
         }
     }
 }
