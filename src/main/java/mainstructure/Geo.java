@@ -2,9 +2,11 @@ package mainstructure;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Scanner;
-import java.util.regex.PatternSyntaxException;
+
+import mainstructure.commands.Command;
+import mainstructure.commands.Parser;
+import mainstructure.savemanager.SaveManager;
 import mainstructure.taskmanager.*;
 
 public class Geo {
@@ -15,28 +17,25 @@ public class Geo {
         //Welcome
         UI.print("Hello from " + logo + '\n' + "How can I help you?\n");
 
-        TaskList taskList = new TaskList();
+        TaskList taskList;
         try {
-            String save = SaveManager.readFileContents(SaveManager.defaultPath);
-            ArrayList<TaskInfo> savedTasks = SaveReader.readSave(save);
-            for (TaskInfo task : savedTasks){
-                addTask(taskList, task.getType(), task.getInfo());
-            }
+            taskList = new TaskList(SaveManager.readSave(SaveManager.defaultPath));
         } catch (FileNotFoundException e){
             UI.print("Save not found\n");
-        } catch (IOException e){
-            UI.print("Error with save file");
+            taskList = new TaskList();
         }
 
         while(true){
             String input = scanner.nextLine();
+            Command command = Parser.parse(input, taskList);
+            command.execute();
+            /*
             if (input.equalsIgnoreCase("bye")){
                 UI.print("Bye. Hope to see you again soon!\n");
                 System.exit(0);
             } else if (input.equalsIgnoreCase("list")) {
                 UI.print(taskList.showFullList());
-            //} else if(input.equalsIgnoreCase("wiki")){
-                //UI.printTaskWiki();
+
             } else {
                 //Action depends on the first word
                 String[] splitBySpace = input.split(" ", 2);
@@ -100,6 +99,7 @@ public class Geo {
                     UI.print("Saving error");
                 }
             }
+             */
         }
     }
 

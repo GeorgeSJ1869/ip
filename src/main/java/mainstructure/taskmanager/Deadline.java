@@ -8,8 +8,18 @@ public class Deadline extends Task{
         this.end = deadline;
     }
 
+    public Deadline(String description, String deadline, boolean isDone){
+        super(description, isDone);
+        this.end = deadline;
+    }
+
     @Override
     public String toString(){
         return "[D]" + super.toString() + " (by: " + end + ")";
+    }
+
+    @Override
+    public String toSave(){
+        return ("todo" + '|' + isDone + '|' + description + '|' + end);
     }
 }

@@ -1,6 +1,9 @@
 package mainstructure.taskmanager;
 
 import mainstructure.UI;
+import mainstructure.savemanager.SaveManager;
+
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class TaskList {
@@ -12,26 +15,49 @@ public class TaskList {
         taskCount = 0;
     }
 
+    public TaskList(ArrayList<Task> existingList){
+        taskList = existingList;
+        taskCount = existingList.size();
+    }
+
     public int getTaskCount(){
         return taskCount;
     }
 
     public void addTask(String description){
-        taskList.add(new Todo(description));
+        Task task = new Todo(description);
+        taskList.add(task);
         taskCount++;
-        UI.printAddTaskMessage(showTask(taskCount), taskCount);
+        try {
+            SaveManager.appendTextFile(SaveManager.defaultPath, task.toSave());
+            UI.printAddTaskMessage(task.toString(), taskCount);
+        } catch (IOException e){
+            deleteTaskMute(taskCount);
+        }
     }
 
     public void addTask(String description, String deadline){
-        taskList.add(new Deadline(description, deadline));
+        Task task = new Deadline(description, deadline);
+        taskList.add(task);
         taskCount++;
-        UI.printAddTaskMessage(showTask(taskCount), taskCount);
+        try {
+            SaveManager.appendTextFile(SaveManager.defaultPath, task.toSave());
+            UI.printAddTaskMessage(task.toString(), taskCount);
+        } catch (IOException e){
+            deleteTaskMute(taskCount);
+        }
     }
 
     public void addTask(String description, String startTime, String endTime){
-        taskList.add(new Event(description, startTime, endTime));
+        Task task = new Event(description, startTime, endTime);
+        taskList.add(task);
         taskCount++;
-        UI.printAddTaskMessage(showTask(taskCount), taskCount);
+        try {
+            SaveManager.appendTextFile(SaveManager.defaultPath, task.toSave());
+            UI.printAddTaskMessage(task.toString(), taskCount);
+        } catch (IOException e){
+            deleteTaskMute(taskCount);
+        }
     }
 
     public void deleteTask(int index){
@@ -39,11 +65,25 @@ public class TaskList {
             String target = showTask(index);
             taskList.remove(index - 1);
             taskCount--;
+            SaveManager.writeTextFile(SaveManager.defaultPath, forSave());
             UI.print("Task deleted:\n"
                     + target + "\n"
                     + "Task count now: " + taskCount + '\n');
         } catch (IndexOutOfBoundsException e){
             UI.print("Invalid task number! Type " + '"' + "list" + '"' + " to view the list of tasks\n");
+        } catch (IOException e){
+            UI.print("Error in saving the task list");
+        }
+    }
+
+    private void deleteTaskMute(int index){
+        try {
+            String target = taskList.get(index - 1).toString();
+            taskList.remove(index - 1);
+            taskCount--;
+            UI.print("Error in saving new task\n" + "The following task is not added to the list:\n" + target + '\n');
+        } catch (IndexOutOfBoundsException e){
+            UI.print("Error in removing unsaved task\n");
         }
     }
 
@@ -66,10 +106,23 @@ public class TaskList {
             return "List is empty!\n";
         } else {
             String list = "Here is the list of all tasks:\n";
-            for (int i = 0; i < taskCount; i++){
-                list += (Integer.toString(i + 1) + ". " + taskList.get(i).toString() + "\n");
+            int i = 1;
+            for (Task task: taskList){
+                list += (i + ". " + task.toString() + "\n");
+                i++;
             }
             return list;
         }
+    }
+
+    public String forSave(){
+        if (taskCount <= 0){
+            return null;
+        }
+        StringBuilder content = new StringBuilder();
+        for (Task task: taskList){
+            content.append(task.toSave()).append('\n');
+        }
+        return content.toString();
     }
 }
