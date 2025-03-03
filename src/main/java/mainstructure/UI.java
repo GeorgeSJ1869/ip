@@ -4,6 +4,9 @@ public class UI {
     private static final String horizontalLine = "____________________________________________________________\n";
 
     public static void print(String content){
+        if (content.charAt(content.length() - 1) != '\n'){
+            content += "\n";
+        }
         System.out.print(horizontalLine + content + horizontalLine + "You:");
     }
 

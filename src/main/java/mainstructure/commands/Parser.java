@@ -37,6 +37,8 @@ public class Parser {
                 return new AddEventCommand(taskList, firstSplit[0].trim(), secondSplit[0].trim(), secondSplit[1].trim());
             case "delete":
                 return new DeleteCommand(taskList, Integer.parseInt(rest));
+            case "find":
+                return new FindCommand(taskList, rest);
             default:
                 return new InvalidCommand();
             }
@@ -53,6 +55,8 @@ public class Parser {
                 return new InvalidEvent();
             case "delete":
                 return new InvalidDelete();
+            case "find":
+                return new InvalidFind();
             default:
                 return new InvalidCommand();
             }

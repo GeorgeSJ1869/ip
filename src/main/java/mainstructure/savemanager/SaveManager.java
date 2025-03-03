@@ -9,21 +9,29 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.regex.PatternSyntaxException;
 
 
 public class SaveManager {
-    public static final String defaultPath = "./save/GeoTaskList.txt";
+    public static final String defaultPath = "save/GeoTaskList.txt";
 
     public static void writeTextFile(String filePath, String text) throws IOException {
-        FileWriter fw = new FileWriter(filePath);
-        fw.write(text);
-        fw.close();
+        Files.createDirectories(Paths.get("save"));
+        if (text == null){
+            new FileWriter(filePath, false).close();
+        } else {
+            FileWriter fw = new FileWriter(filePath);
+            fw.write(text);
+            fw.close();
+        }
     }
 
     public static void appendTextFile(String filePath, String appendText) throws IOException {
+        Files.createDirectories(Paths.get("save"));
         FileWriter fw = new FileWriter(filePath, true);
         fw.write(appendText + '\n');
         fw.close();
