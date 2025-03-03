@@ -43,7 +43,6 @@ public class SaveManager {
     }
 
     private static Task readTask(String line) throws IllegalArgumentException{
-        //System.out.println(line);
         String[] split = line.split("\\|");
         try {
             switch(split[0]){

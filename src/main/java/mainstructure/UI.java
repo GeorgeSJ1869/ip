@@ -22,6 +22,7 @@ public class UI {
                 "todo [task name]": Add a task named [task name]
                 "deadline [task name] /by [deadline]": Add a task with a specific deadline
                 "event [task name] /from [start time] /to [end time]": Add a task with specific start and end times.
+                "delete X": Delete the Xth task from the list.
                 "mark X": Mark the Xth task in the list as done
                 "unmark X": Mark the Xth task in the list as undone
                 
