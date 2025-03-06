@@ -1,6 +1,7 @@
 
-package mainstructure.commands;
+package mainstructure.parser;
 
+import mainstructure.commands.*;
 import mainstructure.commands.invalidcommands.*;
 import mainstructure.taskmanager.TaskList;
 

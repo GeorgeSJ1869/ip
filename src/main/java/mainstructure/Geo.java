@@ -1,11 +1,10 @@
 package mainstructure;
 
 import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.util.Scanner;
 
 import mainstructure.commands.Command;
-import mainstructure.commands.Parser;
+import mainstructure.parser.Parser;
 import mainstructure.savemanager.SaveManager;
 import mainstructure.taskmanager.*;
 

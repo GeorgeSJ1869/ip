@@ -1,10 +1,15 @@
 package mainstructure.taskmanager;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+
 /**
  * The <code>Task</code> that has a deadline.
  */
 public class Deadline extends Task{
     protected String end;
+    protected LocalDate endDate;
 
     /**
      * Instantiate a <code>Deadline</code> task which is undone by default.
@@ -13,7 +18,11 @@ public class Deadline extends Task{
      */
     public Deadline(String description, String deadline){
         super(description);
-        this.end = deadline;
+        try {
+            this.endDate = LocalDate.parse(deadline);
+        } catch (DateTimeParseException e){
+            this.end = deadline;
+        }
     }
 
     /**
@@ -24,16 +33,20 @@ public class Deadline extends Task{
      */
     public Deadline(String description, String deadline, boolean isDone){
         super(description, isDone);
-        this.end = deadline;
+        try {
+            this.endDate = LocalDate.parse(deadline);
+        } catch (DateTimeParseException e){
+            this.end = deadline;
+        }
     }
 
     @Override
     public String toString(){
-        return "[D]" + super.toString() + " (by: " + end + ")";
+        return "[D]" + super.toString() + " (by: " + (endDate == null ? end : endDate.format(DateTimeFormatter.ofPattern("MMM d yyyy"))) + ")";
     }
 
     @Override
     public String toSave(){
-        return ("todo" + '|' + isDone + '|' + description + '|' + end);
+        return "deadline" + '|' + isDone + '|' + description + '|' + (endDate == null ? end : endDate);
     }
 }
