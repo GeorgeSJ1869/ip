@@ -11,6 +11,9 @@ public class UI {
      * @param content the content to be printed.
      */
     public static void print(String content){
+        if (content.charAt(content.length() - 1) != '\n'){
+            content += "\n";
+        }
         System.out.print(horizontalLine + content + horizontalLine + "You:");
     }
 

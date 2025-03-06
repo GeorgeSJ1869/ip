@@ -180,4 +180,16 @@ public class TaskList {
         }
         return content.toString();
     }
+
+    public String find(String content){
+        String list = "";
+        int i = 1;
+        for (Task task : taskList){
+            if (task.description.toLowerCase().contains(content.toLowerCase())){
+                list += (i + ". " + task.toString() + '\n');
+            }
+            i++;
+        }
+        return list.isEmpty() ? "No matching result\n" : list;
+    }
 }
