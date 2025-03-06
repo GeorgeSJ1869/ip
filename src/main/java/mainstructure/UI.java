@@ -11,6 +11,9 @@ public class UI {
      * @param content the content to be printed.
      */
     public static void print(String content){
+        if (content.isEmpty()){
+            return;
+        }
         if (content.charAt(content.length() - 1) != '\n'){
             content += "\n";
         }
@@ -43,6 +46,7 @@ public class UI {
                 "delete X": Delete the Xth task from the list.
                 "mark X": Mark the Xth task in the list as done
                 "unmark X": Mark the Xth task in the list as undone
+                "find [keyword]": View the list of all tasks that contains the [keyword] in the description.
                 
                 """);
     }

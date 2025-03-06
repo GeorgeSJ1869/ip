@@ -72,7 +72,7 @@ public class TaskList {
             deleteTaskMute(taskCount);
         }
     }
-    .
+
     /**
      * Adds an Event type of task to <code>taskList</code>.
      * @param description the description of the task.
@@ -181,6 +181,10 @@ public class TaskList {
         return content.toString();
     }
 
+    /**
+     * @param content the keyword that the found tasks must contain in the description
+     * @return a list that displays all tasks where the description contains <code>content</code>.
+     */
     public String find(String content){
         String list = "";
         int i = 1;
@@ -190,6 +194,6 @@ public class TaskList {
             }
             i++;
         }
-        return list.isEmpty() ? "No matching result\n" : list;
+        return list.isEmpty() ? "No matching result\n" : ("Here are the tasks found:\n" + list);
     }
 }

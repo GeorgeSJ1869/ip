@@ -9,7 +9,7 @@ import mainstructure.savemanager.SaveManager;
 import mainstructure.taskmanager.*;
 
 public class Geo {
-    public static void main(String[] args) throws FileNotFoundException {
+    public static void main(String[] args) {
         String logo = "Geo";
         Scanner scanner = new Scanner(System.in);
 

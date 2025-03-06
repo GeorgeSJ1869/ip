@@ -1,10 +1,9 @@
-# Duke User Guide
-
-// Update the title above to match the actual product name
+# Geo User Guide
 
 // Product screenshot goes here
 
-// Product intro goes here
+// 
+Geo is a chatbot that helps the user with managing tasks.
 
 ## Adding deadlines
 
