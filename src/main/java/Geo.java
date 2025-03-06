@@ -1,3 +1,5 @@
+import java.util.Scanner;
+
 public class Geo {
     public static void main(String[] args) {
         String logo = "Geo";
@@ -6,7 +8,18 @@ public class Geo {
         System.out.println("Hello from " + logo);
         System.out.println("What can I do for you?");
         System.out.println(UIHorizontalLine);
-        exit();
+        Scanner scanner = new Scanner(System.in);
+
+        while (true){
+            String text = scanner.nextLine();
+            if (text.equalsIgnoreCase("bye")){
+                exit();
+            } else {
+                System.out.println(UIHorizontalLine);
+                System.out.println(text);
+                System.out.println(UIHorizontalLine);
+            }
+        }
     }
 
     //Exit
