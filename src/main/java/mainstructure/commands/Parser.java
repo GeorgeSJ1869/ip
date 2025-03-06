@@ -6,7 +6,16 @@ import mainstructure.taskmanager.TaskList;
 
 import java.util.regex.PatternSyntaxException;
 
+/**
+ * Generates commands based on the user's text input.
+ */
 public class Parser {
+    /**
+     * Parse the user's text input and generate commands accordingly.
+     * @param input the user's text input.
+     * @param taskList the <code>TaskList</code> that the commands operate to.
+     * @return a <code>Command</code> that performs certain operations.
+     */
     public static Command parse(String input, TaskList taskList){
         if (input.equalsIgnoreCase("bye")){
             return new ExitCommand();
