@@ -7,7 +7,7 @@ public class UI {
     private static final String horizontalLine = "____________________________________________________________\n";
 
     /**
-     * Print the content to the user, separated by horizontal lines.
+     * Print the content to the console, separated by horizontal lines.
      * @param content the content to be printed.
      */
     public static void print(String content){
@@ -21,7 +21,7 @@ public class UI {
     }
 
     /**
-     * Print the message when a <code>Task</code> is added to the <code>taskList</code>.
+     * Print the message to the console when a <code>Task</code> is added to the <code>taskList</code>.
      * @param task the description of the <code>Task</code>.
      * @param count the total number of tasks in <code>TaskList</code>.
      */
@@ -32,7 +32,7 @@ public class UI {
     }
 
     /**
-     * Prints the list of all possible commands and user guides.
+     * Prints the list of all possible commands and user guides to the console.
      */
     public static void printTaskWiki(){
         print("""
