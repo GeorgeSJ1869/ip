@@ -1,10 +1,10 @@
 package mainstructure;
 
 /**
- * Manages the output of information to the user through CLI.
+ * Manages the output of information to the user through CLI to make it more organised.
  */
 public class UI {
-    private static final String horizontalLine = "____________________________________________________________\n";
+    private static final String horizontalLine = "______________________________________________________________________\n";
 
     /**
      * Print the content to the console, separated by horizontal lines.
