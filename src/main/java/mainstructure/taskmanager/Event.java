@@ -1,5 +1,7 @@
 package mainstructure.taskmanager;
 
+import mainstructure.parser.DateParser;
+
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
@@ -22,12 +24,12 @@ public class Event extends Task{
     public Event(String description, String startTime, String endTime){
         super(description);
         try {
-            this.startDate = LocalDate.parse(startTime);
+            this.startDate = DateParser.parse(startTime);
         } catch (DateTimeParseException e){
             this.start = startTime;
         }
         try {
-            this.endDate = LocalDate.parse(endTime);
+            this.endDate = DateParser.parse(endTime);
         } catch (DateTimeParseException e){
             this.end = endTime;
         }
@@ -43,12 +45,12 @@ public class Event extends Task{
     public Event(String description, String startTime, String endTime, boolean isDone){
         super(description, isDone);
         try {
-            this.startDate = LocalDate.parse(startTime);
+            this.startDate = DateParser.parse(startTime);
         } catch (DateTimeParseException e){
             this.start = startTime;
         }
         try {
-            this.endDate = LocalDate.parse(endTime);
+            this.endDate = DateParser.parse(endTime);
         } catch (DateTimeParseException e){
             this.end = endTime;
         }
@@ -56,15 +58,16 @@ public class Event extends Task{
 
     @Override
     public String toString(){
-        return "[E]" + super.toString() + " (from: " +
-                (startDate == null ? start : startDate.format(DateTimeFormatter.ofPattern("MMM d yyyy"))) + " to: " +
-                (endDate == null ? end : endDate.format(DateTimeFormatter.ofPattern("MMM d yyyy"))) + ")";
+        return "[E]" + super.toString() + " (from: "
+                + (startDate == null ? start : startDate.format(DateTimeFormatter.ofPattern("MMM d yyyy")))
+                + " to: "
+                + (endDate == null ? end : endDate.format(DateTimeFormatter.ofPattern("MMM d yyyy"))) + ")";
     }
 
     @Override
     public String toSave(){
-        return "event" + '|' + isDone + '|' + description + '|' +
-                (startDate == null ? start : startDate) + '|' +
-                (endDate == null ? end : endDate);
+        return "event" + '|' + isDone + '|' + description + '|'
+                + (startDate == null ? start : startDate) + '|'
+                + (endDate == null ? end : endDate);
     }
 }

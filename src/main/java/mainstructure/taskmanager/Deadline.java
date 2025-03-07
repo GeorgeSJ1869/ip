@@ -1,5 +1,7 @@
 package mainstructure.taskmanager;
 
+import mainstructure.parser.DateParser;
+
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
@@ -19,7 +21,7 @@ public class Deadline extends Task{
     public Deadline(String description, String deadline){
         super(description);
         try {
-            this.endDate = LocalDate.parse(deadline);
+            this.endDate = DateParser.parse(deadline);
         } catch (DateTimeParseException e){
             this.end = deadline;
         }
@@ -34,7 +36,7 @@ public class Deadline extends Task{
     public Deadline(String description, String deadline, boolean isDone){
         super(description, isDone);
         try {
-            this.endDate = LocalDate.parse(deadline);
+            this.endDate = DateParser.parse(deadline);
         } catch (DateTimeParseException e){
             this.end = deadline;
         }

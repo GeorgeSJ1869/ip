@@ -1,3 +1,2 @@
-event|false|weekend|2025-03-08|2025-03-09
-deadline|false|ip|2025-03-07
-todo|false|watch movie on weekend
+todo|false|efe
+todo|false|efef

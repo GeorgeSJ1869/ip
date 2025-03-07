@@ -10,7 +10,7 @@ import java.util.regex.PatternSyntaxException;
 /**
  * Generates commands based on the user's text input.
  */
-public class Parser {
+public class CommandParser {
     /**
      * Parse the user's text input and generate commands accordingly.
      * @param input the user's text input.
@@ -27,7 +27,7 @@ public class Parser {
         if (input.equalsIgnoreCase("wiki")) {
             return new WikiCommand();
         }
-        String[] splitCommand = input.split(" ", 2);
+        String[] splitCommand = input.trim().split(" ", 2);
         String first = splitCommand[0];
         try {
             String rest = splitCommand[1].trim();

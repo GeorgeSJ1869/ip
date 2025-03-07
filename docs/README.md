@@ -1,6 +1,6 @@
 # Geo User Guide
 
-### Geo is a chatbot that helps the user with managing tasks.
+### Geo is a chatbot that helps users with managing tasks. Users can enter commands via the console to store, view and delete three types of tasks. Details of each command is shown below:
 
 ## Commands
 
@@ -9,7 +9,7 @@
 
 **Description:** Exits and closes the application.
 
-**Example: `bye`
+**Example**: `bye`
 ```
 Bye. Hope to see you again soon!
 ```
@@ -61,7 +61,7 @@ Task count now: 3
 ### 5. Add an Event Task
 **Command:** `event [task name] /from [start time] /to [end time]`
 
-**Description:** Adds a task with a specific start and end time. The date format should be `YYYY-MM-DD`.
+**Description:** Adds a task with a specific start and end time. The date should be in `YYYY-MM-DD` format.
 
 **Example:** `event weekend /from 2025-03-08 /to 2025-03-09`
 ```

@@ -4,7 +4,7 @@ import java.io.FileNotFoundException;
 import java.util.Scanner;
 
 import mainstructure.commands.Command;
-import mainstructure.parser.Parser;
+import mainstructure.parser.CommandParser;
 import mainstructure.savemanager.SaveManager;
 import mainstructure.taskmanager.*;
 
@@ -24,7 +24,7 @@ public class Geo {
 
         while(true){
             String input = scanner.nextLine();
-            Command command = Parser.parse(input, taskList);
+            Command command = CommandParser.parse(input, taskList);
             command.execute();
         }
     }
