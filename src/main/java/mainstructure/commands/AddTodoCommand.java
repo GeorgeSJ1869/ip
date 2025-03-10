@@ -18,7 +18,10 @@ public class AddTodoCommand extends Command {
      * @param taskList the <code>TaskList</code> where the task is added.
      * @param des the description of the task.
      */
-    public AddTodoCommand(TaskList taskList, String des){
+    public AddTodoCommand(TaskList taskList, String des) throws IOException{
+        if (des.isEmpty()) {
+            throw new IOException();
+        }
         this.taskList = taskList;
         this.description = des;
     }

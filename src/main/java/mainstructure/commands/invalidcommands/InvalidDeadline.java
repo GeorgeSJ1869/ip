@@ -9,7 +9,7 @@ public class InvalidDeadline extends InvalidCommand{
     @Override
     public void execute(){
         String message = """
-                        You need to specify the deadline!
+                        You need to specify the deadline details!
                         Format: deadline [task name] /by [deadline]
                         """;
         UI.print(message);

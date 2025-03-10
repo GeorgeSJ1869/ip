@@ -23,9 +23,9 @@ public class SaveManager {
     public static final String defaultPath = "save/GeoTaskList.txt";
 
     /**
-     * Writes a text file at <code>filePath</code> with the contents of <code>text</code>.
+     * Writes a text file at <code>filePath</code> with the contents of <code>text</code>. Creates the directory if it does not exist
      * @param filePath the path where the file is stored.
-     * @param text the content of the text file to be written.
+     * @param text the content of the text file to be written. If null, creates a new empty file.
      * @throws IOException if the named file exists but is a directory rather than a regular file, does not exist but cannot be created, or cannot be opened for any other reason
      */
     public static void writeTextFile(String filePath, String text) throws IOException {
@@ -40,7 +40,7 @@ public class SaveManager {
     }
 
     /**
-     * Appends <code>appendText</code> to the file at <code>filePath</code>
+     * Appends <code>appendText</code> to the file at <code>filePath</code>.
      * @param filePath the path of the file.
      * @param appendText the content to be appended.
      * @throws IOException if the named file exists but is a directory rather than a regular file, does not exist but cannot be created, or cannot be opened for any other reason

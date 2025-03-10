@@ -5,6 +5,7 @@ import mainstructure.commands.*;
 import mainstructure.commands.invalidcommands.*;
 import mainstructure.taskmanager.TaskList;
 
+import java.io.IOException;
 import java.util.regex.PatternSyntaxException;
 
 /**
@@ -12,7 +13,7 @@ import java.util.regex.PatternSyntaxException;
  */
 public class CommandParser {
     /**
-     * Parse the user's text input and generate commands accordingly.
+     * Parse the user's text input and return a command or an invalid command notification accordingly.
      * @param input the user's text input.
      * @param taskList the <code>TaskList</code> that the commands operate to.
      * @return a <code>Command</code> that performs certain operations.
@@ -52,7 +53,7 @@ public class CommandParser {
             default:
                 return new InvalidCommand();
             }
-        } catch (IndexOutOfBoundsException e){
+        } catch (IndexOutOfBoundsException | IOException e){
             switch (first) {
             case "mark":
             case "unmark":
